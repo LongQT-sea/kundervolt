@@ -1,6 +1,6 @@
 # How to use
 
-This modules, once loaded, creates a number of sysfs files that can be used to access the voltage offsets of Intel CPUs even on systems with Secure Boot enabled. The following offsets are available under `/sys/module/kundervolt/offsets`:
+This module, once loaded, creates a number of sysfs files that can be used to access the voltage offsets of Intel CPUs even on systems with Secure Boot enabled. The following offsets are available under `/sys/module/kundervolt/offsets`:
 
 * `/sys/module/kundervolt/offsets/cpu`: The core's voltage offset.
 * `/sys/module/kundervolt/offsets/gpu`: The voltage offset of the Intel integrated GPU (if available).
