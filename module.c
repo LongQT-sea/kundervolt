@@ -155,7 +155,7 @@ static struct kobj_attribute analog_io_attribute =
 	__ATTR(analog_io, 0664, offsets_show, offsets_store);
 
 // static struct kobj_attribute digital_io_attribute =
-// 	__ATTR(cpu, 0664, offsets_show, offsets_store);
+// 	__ATTR(digital_io, 0664, offsets_show, offsets_store);
 
 static struct attribute* offsets_attrs[] = {
 	&cpu_attribute.attr,	   &gpu_attribute.attr,
