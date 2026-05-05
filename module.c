@@ -203,11 +203,10 @@ static int __init kundervolt_init(void) {
 	if (ret) {
 		kobject_put(offsets_kobj);
 		pr_err(LOGHDR "Failed to create undervolt offsets sysfs files");
+		return ret;
 	}
 
-	if (ret == 0) {
-		pr_info(LOGHDR "module ready!\n");
-	}
+	pr_info(LOGHDR "Module ready!\n");
 	return ret;
 }
 
