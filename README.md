@@ -2,9 +2,11 @@ kundervolt is a kernel module that allows you to undervolt intel CPUs even with 
 
 # Installation
 
+You can install the module either manually or with DKMS. The recommended way is using DKMS.
+
 ## DKMS
 
-The recommended way of installing is with Dynamic Kernel Module Support (DKMS).
+The recommended way of installing this module is with Dynamic Kernel Module Support (DKMS).
 If you don't have it already, install `dkms` using your distribution's package manager.
 
 For Fedora the command is: `sudo dnf install dkms`
