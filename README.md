@@ -1,3 +1,41 @@
+kundervolt is a kernel module that allows you to undervolt intel CPUs even with Secure Boot enabled.
+
+# Installation
+
+## DKMS
+
+The recommended way of installing is with Dynamic Kernel Module Support (DKMS).
+If you don't have it already, install `dkms` using your distribution's package manager.
+
+For Fedora the command is: `sudo dnf install dkms`
+
+### Instructions
+
+```make dkms-install```
+
+This will copy the module source and install it using DKMS. DKMS will automatically load the module on system startup.
+
+> [!IMPORTANT]
+> If this is the first time you are using DKMS you will have to register the DKMS signing key with Secure Boot, otherwise you will not be able to load the module. Follow [this guide](https://github.com/dkms-project/dkms#secure-boot) to do so. Don't worry, you only have to do this once, then DKMS will work without issues.
+
+### How to uninstall
+
+```make dkms-uninstall```
+
+## Manual
+
+Manual installation is not recommended for users as you will have to manually reinstall the module at every kernel update and sign it with a Secure Boot enrolled key.
+It is however useful for testing, as it is much quicker to do than using DKMS.
+
+### Instructions
+
+```
+make install
+```
+
+Then sign the module with a MOK enrolled key and load it with `modprobe kundervolt`
+
+
 # How to use
 
 This module, once loaded, creates a number of sysfs files that can be used to access the voltage offsets of Intel CPUs even on systems with Secure Boot enabled. The following offsets are available under `/sys/module/kundervolt/offsets`:
