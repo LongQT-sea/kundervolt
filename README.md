@@ -13,7 +13,7 @@ For Fedora the command is: `sudo dnf install dkms`
 
 ```make dkms-install```
 
-This will copy the module source and install it using DKMS. DKMS will automatically load the module on system startup.
+This will copy the module source and install it using DKMS.
 
 > [!IMPORTANT]
 > If this is the first time you are using DKMS you will have to register the DKMS signing key with Secure Boot, otherwise you will not be able to load the module. Follow [this guide](https://github.com/dkms-project/dkms#secure-boot) to do so. Don't worry, you only have to do this once, then DKMS will work without issues.
