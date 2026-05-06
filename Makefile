@@ -1,5 +1,5 @@
-MODULE_NAME=kundervolt
-MODULE_VERSION=0.1
+MODULE_NAME := kundervolt
+MODULE_VERSION := 0.1
 
 KVERSION ?= $(shell uname -r)
 
