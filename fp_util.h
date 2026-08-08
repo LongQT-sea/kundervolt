@@ -13,10 +13,20 @@
 
 typedef int32_t intoff_t;
 
-int atof(const char* s, size_t s_size, float* out);
-float offset_int_to_mv(intoff_t offset);
+#define VOLTAGE_RANGE_MIN -999
+#define VOLTAGE_RANGE_MAX 999
+
+/*
+ * Only these two functions are exported.
+ *
+ * Everything that takes or returns a `float` is deliberately kept private to
+ * fp_util.c: this translation unit is built with SSE enabled (see the Makefile)
+ * and passing a float across a function boundary is itself an FPU operation, so
+ * such a function could never be called safely from outside a
+ * kernel_fpu_begin/end() region. Both functions below open that region
+ * internally and no float ever escapes it.
+ */
 size_t offset_int_to_mv_str(char* buf, size_t buf_size, intoff_t offset);
-intoff_t offset_mv_to_int(float mv_offset);
 int offset_mv_str_to_int(intoff_t* offset, const char* buf, size_t buf_size);
 
 #ifdef TESTS

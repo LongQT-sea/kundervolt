@@ -51,9 +51,18 @@ This module, once loaded, creates a number of sysfs files that can be used to ac
 The files contain information about the voltage offset of the specified component in the form of a single floating point number representing millivolts. This is normally `0.00` (indicating that the component is at its normal operating voltage). You can change the value to a negative one to undervolt the component, for example writing `-50` to `/sys/module/kundervolt/offsets/gpu` will apply a `-50` millivolts undervolt to the Intel integrated GPU. A valid offset is in the range of -999 mV to 999 mV.
 
 > [!TIP]
-> * The accepted values must include only numeric characters, possibly decimal, and starting with a negative sign for negative offsets. Unexpected characters (such as whitespace) will cause an invalid input error. I.e. if you are writing to the file with `echo` make sure you use the `-n` option to avoid the newline at the end. E.g. `echo -n '-50' | sudo tee /sys/module/kundervolt/offsets/cpu /sys/module/kundervolt/offsets/cache`
+> * The accepted values must include only numeric characters, possibly decimal, and starting with a negative sign for negative offsets. A single trailing newline is accepted, so both `echo` and `echo -n` work. Any other unexpected character will cause an invalid input error. E.g. `echo '-50' | sudo tee /sys/module/kundervolt/offsets/cpu /sys/module/kundervolt/offsets/cache`
 > * The cpu and cache voltage offsets are separate interfaces, however they cannot have different voltages. The CPU will use the offset with the highest value between the two and appy it to both. As such it is recommended to always give them the same offset value, otherwise one of them will be effectively useless.
 > * Overvolting has been explicitly restricted as I am not aware of any real use for it and doing it by mistake could damage hardware. However, the module does technically support overvolting if the restrictions are removed.
+
+> [!IMPORTANT]
+> After every write the module reads the offset back and compares it against what you asked for. If the two differ it logs a warning to the kernel ring buffer, so check `dmesg` after applying an offset:
+>
+> ```
+> kundervolt: cpu: requested offset 0xf9a00000 but hardware reports 0x00000000. The offset may not have been applied ...
+> ```
+>
+> MSR 0x150 is the interface behind Plundervolt (CVE-2019-11157), and a number of microcode and BIOS updates disable it entirely. On such a system the write is accepted and silently ignored, and this warning is the only way to notice. Reading a file also now returns an error (rather than `0.00`) if the mailbox itself rejects the request, which is what you will see on a CPU that does not implement this interface at all.
 
 # Credits
 
